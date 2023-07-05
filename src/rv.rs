@@ -1,4 +1,4 @@
-use std::{ffi::c_void, slice};
+use std::ffi::c_void;
 
 pub const RV_EIALIGN: u32 = 1;
 pub const RV_EIFAULT: u32 = 2;
