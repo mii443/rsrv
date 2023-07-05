@@ -43,24 +43,24 @@ pub struct RV {
 }
 
 extern "C" fn rv_load_cb(user: *mut c_void, addr: u32, data: *mut u8) -> u32 {
-    if (addr - 0x80000000) > 0x10000 {
+    if (addr.wrapping_sub(0x80000000)) > 0x10000 {
         return RV_BAD;
     }
 
     unsafe {
-        *data = *(user.offset((addr - 0x80000000) as isize) as *mut u8);
+        *data = *(user.offset((addr.wrapping_sub(0x80000000)) as isize) as *mut u8);
     }
 
     RV_OK
 }
 
 extern "C" fn rv_store_cb(user: *mut c_void, addr: u32, data: u8) -> u32 {
-    if (addr - 0x80000000) > 0x10000 {
+    if (addr.wrapping_sub(0x80000000)) > 0x10000 {
         return RV_BAD;
     }
 
     unsafe {
-        *(user.offset((addr - 0x80000000) as isize) as *mut u8) = data;
+        *(user.offset((addr.wrapping_sub(0x80000000)) as isize) as *mut u8) = data;
     }
 
     RV_OK
